@@ -28,11 +28,13 @@ const DEFAULT_OWNER_PASSWORD = "895987";
 const DATA_DIR = __dirname;
 const OWNER_FILE = path.join(DATA_DIR, "owner.json");
 const BOOKINGS_FILE = path.join(DATA_DIR, "bookings.json");
+const CUSTOMERS_FILE = path.join(DATA_DIR, "customers.json");
 const ENQUIRIES_FILE = path.join(DATA_DIR, "enquiries.json");
 
 if (!fs.existsSync(DATA_DIR)) fs.mkdirSync(DATA_DIR, { recursive: true });
 if (!fs.existsSync(BOOKINGS_FILE)) fs.writeFileSync(BOOKINGS_FILE, "[]");
 if (!fs.existsSync(ENQUIRIES_FILE)) fs.writeFileSync(ENQUIRIES_FILE, "[]");
+if (!fs.existsSync(CUSTOMERS_FILE)) fs.writeFileSync(CUSTOMERS_FILE, "[]");
 
 async function getOwnerHash() {
   if (fs.existsSync(OWNER_FILE)) {
@@ -81,6 +83,19 @@ const VEHICLES = {
 };
 
 // ---------- Auth ----------
+function requireCustomer(req, res, next) {
+  const header = req.headers.authorization || "";
+  const token = header.startsWith("Bearer ") ? header.slice(7) : "";
+  try {
+    const payload = jwt.verify(token, JWT_SECRET);
+    if (payload.role !== "customer") throw new Error("Invalid role");
+    req.customer = payload;
+    next();
+  } catch {
+    return res.status(401).json({ message: "Customer login required." });
+  }
+}
+
 function requireOwner(req, res, next) {
   const header = req.headers.authorization || "";
   const token = header.startsWith("Bearer ") ? header.slice(7) : "";
@@ -94,6 +109,39 @@ function requireOwner(req, res, next) {
     return res.status(401).json({ message: "Owner login required." });
   }
 }
+
+app.post("/api/customer/register", async (req, res) => {
+  const name = clean(req.body.name, 100);
+  const phone = clean(req.body.phone, 20);
+  const email = clean(req.body.email, 150);
+  const password = clean(req.body.password, 200);
+  if (!name || !/^[0-9]{10}$/.test(phone) || password.length < 6) {
+    return res.status(400).json({ message: "Name, valid 10-digit mobile and 6+ character password are required." });
+  }
+  const customers = readJson(CUSTOMERS_FILE);
+  if (customers.some(c => c.phone === phone)) return res.status(409).json({ message: "This mobile number is already registered. Please login." });
+  const customer = { id: makeId("CUS"), name, phone, email, passwordHash: await bcrypt.hash(password, 10), createdAt: new Date().toISOString() };
+  customers.unshift(customer);
+  writeJson(CUSTOMERS_FILE, customers);
+  const token = jwt.sign({ role: "customer", customerId: customer.id, name: customer.name, phone: customer.phone }, JWT_SECRET, { expiresIn: "30d" });
+  res.status(201).json({ token, customer: { id: customer.id, name, phone, email } });
+});
+
+app.post("/api/customer/login", async (req, res) => {
+  const phone = clean(req.body.phone, 20);
+  const password = clean(req.body.password, 200);
+  const customer = readJson(CUSTOMERS_FILE).find(c => c.phone === phone);
+  if (!customer || !(await bcrypt.compare(password, customer.passwordHash))) return res.status(401).json({ message: "Invalid mobile number or password." });
+  const token = jwt.sign({ role: "customer", customerId: customer.id, name: customer.name, phone: customer.phone }, JWT_SECRET, { expiresIn: "30d" });
+  res.json({ token, customer: { id: customer.id, name: customer.name, phone: customer.phone, email: customer.email } });
+});
+
+app.get("/api/customer/me", requireCustomer, (req, res) => {
+  const customer = readJson(CUSTOMERS_FILE).find(c => c.id === req.customer.customerId);
+  if (!customer) return res.status(404).json({ message: "Customer not found." });
+  const bookings = readJson(BOOKINGS_FILE).filter(b => b.customerId === customer.id);
+  res.json({ customer: { id: customer.id, name: customer.name, phone: customer.phone, email: customer.email, createdAt: customer.createdAt }, bookings });
+});
 
 app.post("/api/auth/login", async (req, res) => {
   const password = clean(req.body.password, 200);
@@ -130,8 +178,11 @@ app.post("/api/auth/change-password", requireOwner, async (req, res) => {
 });
 
 // ---------- Public booking ----------
-app.post("/api/bookings", (req, res) => {
+app.post("/api/bookings", requireCustomer, (req, res) => {
   const body = req.body || {};
+  const customers = readJson(CUSTOMERS_FILE);
+  const customer = customers.find(c => c.id === req.customer.customerId);
+  if (!customer) return res.status(401).json({ message: "Please login before booking." });
   const vehicle = clean(body.vehicle, 50);
   const km = Number(body.km);
   const passengers = Number(body.passengers);
@@ -162,8 +213,9 @@ app.post("/api/bookings", (req, res) => {
   const fare = Number.isFinite(requestedTotal) && requestedTotal > 0 ? Math.round(requestedTotal) : vehicleFare + packageFare;
   const booking = {
     id: makeId("SRT"),
-    name: clean(body.name, 100),
-    phone: clean(body.phone, 20),
+    customerId: customer.id,
+    name: customer.name,
+    phone: customer.phone,
     email: clean(body.email, 150),
     date: clean(body.date, 30),
     from: clean(body.from, 200),
@@ -231,7 +283,7 @@ app.get("/api/owner/bookings", requireOwner, (req, res) => {
 });
 
 app.patch("/api/owner/bookings/:id/status", requireOwner, (req, res) => {
-  const allowed = ["Pending", "Confirmed", "Cancelled", "Completed"];
+  const allowed = ["Pending", "Confirmed", "Ongoing", "Cancelled", "Completed"];
   const status = clean(req.body.status, 30);
   if (!allowed.includes(status)) return res.status(400).json({ message: "Invalid status." });
 
@@ -271,6 +323,16 @@ app.get("/api/owner/enquiries", requireOwner, (req, res) => {
   res.json({ enquiries: readJson(ENQUIRIES_FILE) });
 });
 
+app.get("/api/owner/customers", requireOwner, (req, res) => {
+  const customers = readJson(CUSTOMERS_FILE);
+  const bookings = readJson(BOOKINGS_FILE);
+  const rows = customers.map(c => {
+    const cb = bookings.filter(b => b.customerId === c.id);
+    return { id: c.id, name: c.name, phone: c.phone, email: c.email, createdAt: c.createdAt, bookings: cb.length, totalValue: cb.reduce((a,b)=>a+Number(b.fare||0),0) };
+  });
+  res.json({ customers: rows });
+});
+
 app.get("/api/owner/summary", requireOwner, (req, res) => {
   const bookings = readJson(BOOKINGS_FILE);
   const enquiries = readJson(ENQUIRIES_FILE);
@@ -281,6 +343,8 @@ app.get("/api/owner/summary", requireOwner, (req, res) => {
     confirmed: bookings.filter(b => b.status === "Confirmed").length,
     completed: bookings.filter(b => b.status === "Completed").length,
     cancelled: bookings.filter(b => b.status === "Cancelled").length,
+    ongoing: bookings.filter(b => b.status === "Ongoing").length,
+    upcoming: bookings.filter(b => b.status === "Confirmed" && new Date(b.date) >= new Date()).length,
     estimatedValue: bookings.reduce((sum, b) => sum + Number(b.fare || 0), 0),
     enquiries: enquiries.length
   });
@@ -307,7 +371,8 @@ const PAGE_FILES = {
   "/destinations": "destinations.html",
   "/track-booking": "track-booking.html",
   "/customer-login": "customer-login.html",
-  "/package": "package.html"
+  "/package": "package.html",
+  "/booking-view": "booking-view.html"
 };
 for (const [route, file] of Object.entries(PAGE_FILES)) {
   app.get(route, (req, res) => res.sendFile(path.join(__dirname, file)));

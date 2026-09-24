@@ -1,18 +1,29 @@
-# Shree Ram Tours & Travels - Railway Single Folder
+# Shree Ram Tours & Travels — Railway Single-Folder Project
 
-All deployable files are intentionally in ONE folder (no public/data/assets subfolders).
+## Run
+1. Open this folder in VS Code.
+2. `npm install`
+3. `npm start`
+4. Open `http://localhost:3000`
 
-## Railway
-- Build command: npm install
-- Start command: npm start
-- Root files: package.json, server.js, HTML/CSS/JS, JSON data, logo.svg
+Do not use VS Code Live Server for the booking/auth flow because the Node/Express API is required.
+
+## Customer flow
+- Customer must Register/Login before booking.
+- Customer login token is used for booking creation.
+- Customer Account shows Book Now, Track Booking and My Bookings.
+- Each booking has View Details and Track Trip.
+- Owner can see registered customers and all booking details.
 
 ## Owner
-- Login page: /owner-login
-- Initial password: 895987
-- Change password from owner dashboard.
+- Owner login: `/owner-login`
+- Initial password: `895987`
+- Dashboard shows bookings, ongoing, upcoming, cancelled, completed and payment counts.
+- Owner can set a booking to Pending, Confirmed, Ongoing, Completed or Cancelled.
+- Owner can open View and Track for every booking.
+- Owner can see registered clients in Customers.
 
-## Local
-npm install
-npm start
-Then open http://localhost:3000
+## Data files
+`bookings.json`, `customers.json`, and `enquiries.json` are in the same project root for Railway single-folder deployment.
+
+For production on Railway, use a persistent Volume if you want JSON data to survive redeploys/restarts, or migrate storage to a database.
