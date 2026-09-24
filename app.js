@@ -3,6 +3,7 @@ const VEHICLES=[
 {name:'Sedan',model:'Amaze',seats:4,rate:15,image:'amaze.jpg'},
 {name:'SUV',model:'Bolero',seats:6,rate:16,image:'bolero.jpg'},
 {name:'Innova',model:'Ertiga / Innova',seats:7,rate:18,image:'ertiga.jpg'},
+{name:'Eeco',model:'Maruti Eeco',seats:7,rate:16,image:'eeco.jpg'},
 {name:'Tempo Traveller',model:'Toofan',seats:14,rate:20,image:'toofan.jpg'},
 {name:'Luxury Car',model:'Premium',seats:4,rate:30,image:'https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=900&q=80'},
 {name:'Bus',model:'Group Coach',seats:35,rate:35,image:'group-coach.jpg'}];

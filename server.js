@@ -77,6 +77,7 @@ const VEHICLES = {
   "Sedan": { seats: 4, rate: 15 },
   "SUV": { seats: 6, rate: 16 },
   "Innova": { seats: 7, rate: 18 },
+  "Eeco": { seats: 7, rate: 16 },
   "Tempo Traveller": { seats: 14, rate: 20 },
   "Luxury Car": { seats: 4, rate: 30 },
   "Bus": { seats: 35, rate: 35 }
@@ -198,6 +199,9 @@ app.post("/api/bookings", requireCustomer, (req, res) => {
   }
   if (!Number.isFinite(passengers) || passengers < 1) {
     return res.status(400).json({ message: "Passenger count is invalid." });
+  }
+  if (passengers > VEHICLES[vehicle].seats) {
+    return res.status(400).json({ message: `Selected vehicle allows up to ${VEHICLES[vehicle].seats} passengers.` });
   }
 
   const packagePrices = {
