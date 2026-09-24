@@ -56,3 +56,13 @@
 
 /* Owner area intentionally has dashboard only; no public/mobile navigation. */
 .owner-app .owner-mobile-bar,.owner-app .owner-mobile-top{display:none!important;}
+
+/* Owner dashboard: no public/premium navigation. */
+.owner-app{min-height:100vh;background:linear-gradient(180deg,#f7faff 0%,#eef5fb 100%)}
+.owner-shell>.container{max-width:1440px}
+.owner-logo{width:64px;height:64px;object-fit:contain;object-position:center;display:block;flex:0 0 auto;border-radius:16px;background:#fff;padding:4px;box-shadow:0 8px 24px rgba(9,39,74,.12)}
+.owner-welcome{display:flex;align-items:center;gap:14px}
+.owner-layout{display:block!important}
+.dash-main{width:100%!important;max-width:none!important}
+.dash-sidebar{display:none!important}
+@media(max-width:700px){.owner-logo{width:52px;height:52px;border-radius:12px}.owner-welcome{gap:10px}.owner-head-actions .btn{padding:9px 12px}.owner-header{gap:10px}}
