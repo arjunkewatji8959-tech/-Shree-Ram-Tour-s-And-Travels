@@ -1,5 +1,7 @@
 // OWNER DASHBOARD — authentication, live booking lists, history, payments, customers and password change.
 let token=localStorage.getItem('srt_owner_token')||'', allBookings=[];
+/* Keep the owner dashboard private: direct access without a successful login goes to the password screen. */
+if(!token){ window.location.replace('owner-login.html'); }
 const isDemo = token === 'demo-owner:local-preview';
 function demoRead(key, fallback){ try{return JSON.parse(localStorage.getItem(key)||JSON.stringify(fallback));}catch{return fallback;} }
 function demoWrite(key,value){localStorage.setItem(key,JSON.stringify(value));}
