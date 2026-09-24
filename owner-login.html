@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Secure owner login for Shree Ram Tours & Travels.">
+<title>Owner Login | Shree Ram Tours & Travels</title>
+<link rel="icon" href="logo.svg">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="navbar"><div class="container nav-inner">
+<a class="brand" href="index.html"><img src="logo.svg" alt="Shree Ram Tours & Travels"><span>Shree Ram <small>TOURS & TRAVELS</small></span></a>
+<nav><a href="index.html">Home</a><a href="packages.html">Tours</a><a href="vehicles.html">Vehicles</a><a href="booking.html">Booking</a><a href="contact.html">Contact</a></nav>
+<a class="btn primary nav-book" href="booking.html">Book Now</a>
+</div></header>
+<main class="owner-panel" style="min-height:calc(100vh - 76px);display:grid;place-items:center;">
+<div class="container">
+<div class="login-card owner-login-card" style="max-width:470px;position:relative;overflow:hidden;">
+<div style="position:absolute;inset:-120px -120px auto auto;width:220px;height:220px;border-radius:50%;background:rgba(231,173,63,.16);filter:blur(2px);"></div>
+<div class="login-icon">🔐</div>
+<span class="eyebrow">SECURE OWNER ACCESS</span>
+<h1 style="margin:8px 0 5px;">Owner Login</h1>
+<p style="color:#cbd9e7;margin-top:0;">Login to manage bookings, ongoing trips, history, payments and customer enquiries.</p>
+<form id="ownerLoginForm">
+<label>Password<input id="ownerPassword" type="password" autocomplete="current-password" placeholder="Enter owner password" required></label>
+<button class="btn gold full" style="margin-top:16px;">🔓 Login to Dashboard</button>
+</form>
+<div id="ownerLoginMessage" class="form-message"></div>
+<div style="margin-top:18px;padding:12px;border-radius:12px;background:#ffffff10;color:#cbd9e7;font-size:12px;">Initial password: <b style="color:#ffd76a;">895987</b><br>After login, change your password from the Owner Dashboard.</div>
+</div>
+</div>
+</main>
+<footer><div class="copyright">© 2026 Shree Ram Tours & Travels. Owner Area.</div></footer>
+<script src="owner-login.js"></script>
+</body>
+</html>

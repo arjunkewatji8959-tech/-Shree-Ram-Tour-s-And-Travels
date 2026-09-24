@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 150" role="img" aria-labelledby="title desc">
+  <title id="title">Shree Ram Tour's And Travels Bhedaghat</title>
+  <desc id="desc">Travel company logo with road, mountain and sun symbol.</desc>
+  <defs>
+    <linearGradient id="sun" x1="0" x2="1"><stop offset="0" stop-color="#ff7a00"/><stop offset="1" stop-color="#ffd21a"/></linearGradient>
+  </defs>
+  <rect width="560" height="150" rx="28" fill="#ffffff"/>
+  <circle cx="75" cy="62" r="42" fill="url(#sun)"/>
+  <path d="M25 115 C65 75 96 73 132 112" fill="none" stroke="#0a5fae" stroke-width="11" stroke-linecap="round"/>
+  <path d="M40 91 L66 56 L88 82 L108 48 L132 91" fill="none" stroke="#082c52" stroke-width="9" stroke-linejoin="round"/>
+  <path d="M24 117 C62 100 100 99 139 117" fill="none" stroke="#ff7a00" stroke-width="7"/>
+  <text x="155" y="62" font-family="Arial, sans-serif" font-size="38" font-weight="800" fill="#082c52">Shree Ram</text>
+  <text x="157" y="93" font-family="Arial, sans-serif" font-size="22" font-weight="700" fill="#1265b0">Tour's And Travels</text>
+  <text x="158" y="120" font-family="Arial, sans-serif" font-size="16" font-weight="800" fill="#ff7a00">BHEDAGHAT</text>
+</svg>

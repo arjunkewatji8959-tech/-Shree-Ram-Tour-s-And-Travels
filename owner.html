@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Owner dashboard for Shree Ram Tours & Travels.">
+<title>Owner Dashboard | Shree Ram Tours & Travels</title>
+<link rel="icon" href="logo.svg"><link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="topbar"><div class="container topbar-inner"><span>📍 Bhedaghat, Madhya Pradesh</span><span>☎ <a href="tel:8889352002">8889352002</a></span><span>💬 <a href="https://wa.me/918889352002" target="_blank">WhatsApp</a></span><span>✉ <a href="mailto:shreeramtoursa@gmail.com">shreeramtoursa@gmail.com</a></span></div></div>
+<header class="navbar"><div class="container nav-inner"><a class="brand" href="index.html"><img src="logo.svg" alt="Shree Ram Tours & Travels"><span>Shree Ram <small>TOURS & TRAVELS</small></span></a><button class="menu-btn" id="menuBtn" aria-label="Open menu">☰</button><nav id="nav"><a href="index.html">Home</a><a href="packages.html">Tours</a><a href="vehicles.html">Vehicles</a><a href="hotels.html">Hotels</a><a href="booking.html">Booking</a><a href="destinations.html">Destinations</a><a href="gallery.html">Gallery</a><a href="about.html">About</a><a href="contact.html">Contact</a></nav><a class="btn primary nav-book" href="booking.html">Book Now</a></div></header>
+<main class="owner-app">
+<section class="owner-shell"><div class="container">
+  <div id="dashboard" class="hidden">
+    <header class="owner-header">
+      <div class="owner-welcome">
+        <div class="owner-avatar">SR</div>
+        <div><span class="eyebrow">OWNER CONTROL</span><h1>Dashboard</h1><p>Manage your travel business at a glance.</p></div>
+      </div>
+      <div class="owner-head-actions"><button class="icon-btn" id="refreshDash" title="Refresh">↻</button><button class="btn outline" id="logout">Logout</button></div>
+    </header>
+
+    <section class="owner-kpis" aria-label="Booking summary">
+      <article class="kpi kpi-blue"><div class="kpi-icon">📋</div><div><span>Total Bookings</span><strong id="statTotal">0</strong></div><small>All time</small></article>
+      <article class="kpi kpi-green"><div class="kpi-icon">🟢</div><div><span>Ongoing</span><strong id="statOngoing">0</strong></div><small>Today</small></article>
+      <article class="kpi kpi-gold"><div class="kpi-icon">📅</div><div><span>Upcoming</span><strong id="statUpcoming">0</strong></div><small>Confirmed</small></article>
+      <article class="kpi kpi-red"><div class="kpi-icon">✕</div><div><span>Cancelled</span><strong id="statCancelled">0</strong></div><small>Trips</small></article>
+    </section>
+
+    <section class="owner-mini-stats">
+      <div><span>Pending</span><b id="statPending">0</b></div><div><span>Confirmed</span><b id="statConfirmed">0</b></div><div><span>Completed</span><b id="statCompleted">0</b></div><div><span>Payment Pending</span><b id="statPaymentPending">0</b></div><div><span>Booking Value</span><b id="statRevenue">₹0</b></div>
+    </section>
+
+    <div class="owner-layout">
+      <aside class="dash-sidebar">
+        <div class="sidebar-title">MENU</div>
+        <a class="active" href="#overview">⌂ <span>Overview</span></a>
+        <a href="#bookings">▤ <span>All Bookings</span></a>
+        <a href="#ongoing">● <span>Ongoing Trips</span></a>
+        <a href="#upcoming">◷ <span>Upcoming</span></a>
+        <a href="#history">↺ <span>History</span></a>
+        <a href="#payments">₹ <span>Payments</span></a>
+        <a href="#customers">♙ <span>Customers</span></a>
+        <a href="#enquiries">✉ <span>Enquiries</span></a>
+        <a href="#reports">▥ <span>Reports</span></a>
+        <div class="sidebar-title side-gap">MANAGE</div>
+        <a href="packages.html">✈ <span>Packages</span></a><a href="vehicles.html">🚐 <span>Vehicles</span></a><a href="destinations.html">⌖ <span>Destinations</span></a><a href="#password">⚙ <span>Settings</span></a>
+      </aside>
+
+      <div class="dash-main">
+        <section id="overview" class="dash-section owner-overview">
+          <div class="section-head compact-head"><div><span class="eyebrow">OVERVIEW</span><h2>Today at a glance</h2></div><a class="text-link" href="#bookings">View all bookings →</a></div>
+          <div class="quick-grid">
+            <a class="quick-card" href="#ongoing"><span class="quick-icon green">●</span><div><b id="ongoingCount">0</b><span>Ongoing trips</span></div><em>Today</em></a>
+            <a class="quick-card" href="#upcoming"><span class="quick-icon blue">◷</span><div><b id="upcomingCount">0</b><span>Upcoming trips</span></div><em>Next</em></a>
+            <a class="quick-card" href="#history"><span class="quick-icon gray">↺</span><div><b id="historyCount">0</b><span>History</span></div><em>Past</em></a>
+            <a class="quick-card" href="#payments"><span class="quick-icon gold">₹</span><div><b id="paymentPendingCount">0</b><span>Pending payments</span></div><em>Action</em></a>
+          </div>
+          <div class="welcome-strip"><div><b>Keep your trips organized.</b><span>Review pending bookings and confirm today's journeys.</span></div><a class="btn primary" href="#bookings">Manage Bookings</a></div>
+        </section>
+
+        <section id="bookings" class="dash-section"><div class="section-head"><div><span class="eyebrow">BOOKINGS</span><h2>All bookings</h2></div><div class="booking-tools"><input id="bookingSearch" type="search" placeholder="Search booking, name or phone"><select id="bookingFilter"><option value="All">All Status</option><option>Pending</option><option>Confirmed</option><option>Completed</option><option>Cancelled</option></select></div></div><div class="table-card"><div class="table-scroll"><table><thead><tr><th>ID</th><th>Customer</th><th>Trip</th><th>Date</th><th>Vehicle</th><th>Fare</th><th>Payment</th><th>Status</th><th>Actions</th></tr></thead><tbody id="bookingRows"></tbody></table></div></div></section>
+
+        <section id="ongoing" class="dash-section"><div class="section-head"><div><span class="eyebrow">LIVE</span><h2>Ongoing trips</h2></div></div><div id="ongoingCards" class="booking-cards"></div></section>
+        <section id="upcoming" class="dash-section"><div class="section-head"><div><span class="eyebrow">NEXT</span><h2>Upcoming trips</h2></div></div><div id="upcomingCards" class="booking-cards"></div></section>
+        <section id="history" class="dash-section"><div class="section-head"><div><span class="eyebrow">HISTORY</span><h2>Completed & cancelled</h2></div></div><div id="historyCards" class="booking-cards"></div></section>
+        <section id="payments" class="dash-section"><div class="section-head"><div><span class="eyebrow">PAYMENTS</span><h2>Payment status</h2></div></div><div class="table-card"><div class="table-scroll"><table><thead><tr><th>Booking</th><th>Customer</th><th>Fare</th><th>Payment</th><th>Update</th></tr></thead><tbody id="paymentRows"></tbody></table></div></div></section>
+        <section id="customers" class="dash-section"><div class="section-head"><div><span class="eyebrow">CUSTOMERS</span><h2>Customer list</h2></div></div><div class="table-card"><div class="table-scroll"><table><thead><tr><th>Name</th><th>Phone</th><th>Email</th><th>Bookings</th><th>Total Value</th></tr></thead><tbody id="customerRows"></tbody></table></div></div></section>
+        <section id="enquiries" class="dash-section"><div class="section-head"><div><span class="eyebrow">ENQUIRIES</span><h2>Customer messages</h2></div></div><div class="table-card"><div class="table-scroll"><table><thead><tr><th>ID</th><th>Name</th><th>Phone</th><th>Email</th><th>Message</th><th>Date</th></tr></thead><tbody id="enquiryRows"></tbody></table></div></div></section>
+        <section id="reports" class="dash-section"><div class="card"><div class="card-title"><h2>Business report</h2><span>Live from booking records</span></div><div id="reportText" class="report-grid"></div></div></section>
+        <section id="password" class="dash-section"><div class="card settings-card"><div class="card-title"><h2>Owner settings</h2><span>Change password</span></div><form id="changePasswordForm" class="form-grid"><label>Current Password<input id="currentPassword" type="password" required></label><label>New Password<input id="newPassword" type="password" minlength="6" required></label><label>Confirm New Password<input id="confirmPassword" type="password" minlength="6" required></label><div class="full"><button class="btn primary">Change Password</button><div id="passwordMessage" class="form-message"></div></div></form></div></section>
+      </div>
+    </div>
+  </div>
+</div></section></main>
+<nav class="owner-mobile-bar" aria-label="Owner mobile navigation"><a href="#overview" class="active"><span>⌂</span><small>Home</small></a><a href="#bookings"><span>▤</span><small>Bookings</small></a><a href="#ongoing"><span>●</span><small>Ongoing</small></a><a href="#history"><span>↺</span><small>History</small></a><a href="#payments"><span>₹</span><small>Payments</small></a></nav>
+<footer><div class="container footer-grid"><div class="footer-brand"><img src="logo.svg" class="footer-logo" alt="Shree Ram logo"><h3>Shree Ram Tours & Travels</h3><p>Your Journey, Our Responsibility.</p></div><div><h4>Quick Links</h4><a href="index.html">Home</a><a href="packages.html">Tours</a><a href="vehicles.html">Vehicles</a><a href="booking.html">Booking</a></div><div><h4>Explore</h4><a href="destinations.html">Destinations</a><a href="gallery.html">Gallery</a><a href="about.html">About</a><a href="contact.html">Contact</a><a href="track-booking.html">Track Booking</a></div><div><h4>Contact</h4><p>8889352002 / 8889520028</p><p>shreeramtoursa@gmail.com</p><p>Bhedaghat, Madhya Pradesh</p></div></div><div class="copyright">© 2026 Shree Ram Tours & Travels. All Rights Reserved.</div><div class="owner-footer"><a class="owner-login-bottom" href="owner-login.html">🔐 Owner Login</a></div></footer>
+<div class="floating-actions"><a href="tel:8889352002">☎</a><a href="https://wa.me/918889352002" target="_blank">💬</a></div><div class="mobile-book"><a href="booking.html">🚐 Book Now</a><a href="track-booking.html">🔎 Track</a><a href="customer-login.html">👤 Account</a></div>
+<script src="owner.js"></script>
+</body></html>
