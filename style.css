@@ -66,3 +66,9 @@
 .dash-main{width:100%!important;max-width:none!important}
 .dash-sidebar{display:none!important}
 @media(max-width:700px){.owner-logo{width:52px;height:52px;border-radius:12px}.owner-welcome{gap:10px}.owner-head-actions .btn{padding:9px 12px}.owner-header{gap:10px}}
+
+
+/* Final owner header polish: logo left, logout right, clean on mobile. */
+.owner-header{display:flex;align-items:center;justify-content:space-between;gap:18px;padding:4px 0 18px;margin-bottom:20px;border-bottom:1px solid #e5ebf2}.owner-welcome{display:flex;align-items:center;gap:14px;min-width:0}.owner-logo{width:62px;height:62px;object-fit:contain;flex:0 0 62px;border-radius:14px;background:#fff;padding:4px;box-shadow:0 6px 18px rgba(9,39,74,.10)}.owner-title{min-width:0}.owner-title h1{margin:2px 0 1px;font-size:26px}.owner-title p{margin:0;font-size:12px;color:#728194}.owner-head-actions{margin-left:auto;display:flex;align-items:center}.owner-logout{min-width:92px;min-height:42px;white-space:nowrap;font-weight:900}.owner-logout:hover{background:#f4f8fc;border-color:#cfdbe7}
+@media(max-width:700px){.owner-shell{padding:12px 0 30px}.owner-header{padding:2px 0 13px;margin-bottom:13px;gap:10px}.owner-welcome{gap:9px}.owner-logo{width:46px;height:46px;flex-basis:46px;border-radius:11px;padding:3px}.owner-title .eyebrow{font-size:8px;letter-spacing:1.3px}.owner-title h1{font-size:20px;line-height:1.15}.owner-title p{display:none}.owner-head-actions{flex:0 0 auto}.owner-logout{min-width:72px;min-height:36px;padding:8px 10px!important;border-radius:10px;font-size:11px!important}.owner-kpis{margin-bottom:10px}}
+@media(max-width:360px){.owner-logo{width:42px;height:42px;flex-basis:42px}.owner-title h1{font-size:18px}.owner-logout{min-width:66px;padding:7px 8px!important;font-size:10px!important}}
